@@ -22,9 +22,19 @@ See: udacity-dl -h
 
 Example usage:
 
-udacity-dl  -d /my/udacity/courses/ 
+udacity-dl  -d /my/destination/path/ course_name 
 
   [Python]: http://www.python.org/download/
+  
+ Notes
+ -----
+ For the link:
+ https://www.udacity.com/wiki/ST095/downloads
+ 
+ "ST095"  is the course_name
+ 
+ Usage:
+    udacity-dl  -d /my/destination/path/ ST095
 =======
 ==========
 
