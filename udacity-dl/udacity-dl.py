@@ -28,53 +28,38 @@ class UdacityDownloader():
 
     def get_downloadable_content(self, course_url):
         course_name = self.get_course_name_from_url(course_url)
-        #print course_name
         
         print "* Collecting downloadable content from " + course_url
 
         # get the course name, and redirect to the course lecture page
         vidpage = self.browser.open(course_url)
-        #print "vidpage: ", vidpage
         
         # extract the weekly classes
         soup = BeautifulSoup(vidpage)
-        #print soup.prettify()
         headers = soup.findAll("div", { "class" : "wtabs extl" })
-        #print "headers: ", headers
         
         for header in headers:
             h2 = header.findNext('h2')
-            #print "txt: ", h2.text
-            
             ul = h2.findNextSibling('ul')
-            #print ul
-            
             lis = ul.findAll('li')
-            #print lis
             
             weeklyClasses = {}
             
             classNames = []
             for li in lis:
-                #print li
                 className = li.a.text
                 classNames.append(className)
                 hrefs = li.find('a')
                 
-                #print className, classNames, hrefs
                 resourceLink = hrefs['href']
-                #print "this is the required link; ", resourceLink
                 
                 weeklyClasses[className] = resourceLink
-            
-        
         return weeklyClasses
 
     def download(self, url, target_dir=".", target_fname=None):
         """Download the url to the given filename"""
         r = self.browser.open(url)
         
-        # get the headers
         headers = r.info()
         
         # get the content length (if present)
@@ -117,8 +102,6 @@ class UdacityDownloader():
         
         download_dict = self.get_downloadable_content(download_url)
         
-        #print "Downloadable Contents: ", download_dict
-        
         print '* Got all downloadable content for ' + cname
         
         course_dir = os.path.abspath(os.path.join(dest_dir, cname))
@@ -139,7 +122,6 @@ class UdacityDownloader():
         for fname, tfname in download_dict.iteritems():
             try:
                 print "Downloading ", fname, "..."
-                tfname = "https://s3.amazonaws.com/udacity-serving-videos/zip/st095/Problem_Set_2-subtitles.en.zip"
                 self.download(tfname, target_dir=course_dir, target_fname=fname)
             except Exception as e:
                 print "     - failed ", fname, e    

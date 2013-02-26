@@ -1,5 +1,4 @@
 udacity-dl
-<<<<<<< HEAD
 ===========
 
 A python package for archiving content from udacity.org (videos,
@@ -26,7 +25,6 @@ Example usage:
 udacity-dl  -d /my/udacity/courses/ 
 
   [Python]: http://www.python.org/download/
-  [pip]: http://www.pip-installer.org/en/latest/installing.html
 =======
 ==========
->>>>>>> 0053f4231b8963fadde4563bc31c1e97f4b72c4d
+
