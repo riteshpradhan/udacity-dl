@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name="udacity-dl",
-            version="1.1",
+            version="1.1.1",
             description="Download udacity class videos and resources",
             long_description=open("README.md").read(),
             author="Ritesh Pradhan",
