@@ -3,9 +3,9 @@
 from setuptools import setup
 
 setup(name="udacity-dl",
-            version="1.1.1",
+            version="1.1.2",
             description="Download udacity class videos and resources",
-            long_description=open("README.md").read(),
+            long_description=open("README").read(),
             author="Ritesh Pradhan",
             author_email="ritesxz@gmail.com",
             url="https://github.com/ritespradhan/udacity-dl",
