@@ -14,6 +14,9 @@ Then simply run: python setup.py install
 This will create a udacity-dl script in /usr/local/bin (linux) or
 c:\\Pytohon2.7\\Scripts (windows)
 
+OR using pip:
+sudo pip install udacity-dl
+
 
 Usage 
 ------
