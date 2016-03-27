@@ -56,8 +56,13 @@ class UdacityDownloader():
                 classNames.append(className)
                 hrefs = li.find('a')
                 resourceLink = hrefs['href']
+                while className in weeklyClasses:
+                    className += "."
                 weeklyClasses[className] = resourceLink
-            resources[head_name.text] = weeklyClasses
+            headText = head_name.text
+            while headText in resources:
+                headText += "."
+            resources[headText] = weeklyClasses
         return resources
 
     def download(self, url, target_dir=".", target_fname=None):
