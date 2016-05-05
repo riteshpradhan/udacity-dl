@@ -80,4 +80,4 @@ List of Courses
  - 'MA006': 'Visualizing Algebra: Problems and Patterns',
  - 'MA008': 'College Algebra: Animals, Architecture, and Innovation',
  - 'PS001': 'Introduction to Psychology: The Science of Thought and Behavior',
- - 'ST095': 'Statistics: The Science of Decisions',
+ - 'ST095': 'Statistics: The Science of Decisions'
