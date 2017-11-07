@@ -1,7 +1,8 @@
 import os
 import re
-import urllib
 import argparse
+import requests
+import progressbar
 from mechanize import Browser
 from bs4 import BeautifulSoup
 from courses import COURSES_DICT
@@ -40,7 +41,7 @@ class UdacityDownloader():
         vidpage = self.browser.open(course_url)
 
         # extract the weekly classes
-        soup = BeautifulSoup(vidpage)
+        soup = BeautifulSoup(vidpage,"lxml")
         headers = soup.find("div", { "class" : "wtabs extl" })
 
         head_names = headers.findAll("h2")
@@ -64,43 +65,6 @@ class UdacityDownloader():
                 headText += "."
             resources[headText] = weeklyClasses
         return resources
-
-    def download(self, url, target_dir=".", target_fname=None):
-        """Download the url to the given filename"""
-        r = self.browser.open(url)
-
-        headers = r.info()
-
-        # get the content length (if present)
-        clen = int(headers['Content-Length']) if 'Content-Length' in headers else -1
-
-        # build the absolute path we are going to write to
-        fname = target_fname
-        filepath = os.path.join(target_dir, fname)
-
-        dl = True
-        if os.path.exists(filepath):
-            print "file already exists. verifyling length"
-            if clen > 0:
-                fs = os.path.getsize(filepath)
-                delta = clen - fs
-        #        # all we know is that the current filesize may be shorter than it should be and the content length may be incorrect
-        #        # overwrite the file if the reported content length is bigger than what we have already by at least k bytes (arbitrary)
-
-                if delta > 2:
-                    print '    - "%s" seems incomplete, downloading again' % fname
-                else:
-                    print '    - "%s" already exists, skipping' % fname
-                    dl = False
-            else:
-                # missing or invalid content length
-                # assume all is ok...
-                dl = False
-
-        try:
-            if dl: self.browser.retrieve(url, filepath)
-        except Exception as e:
-            print "Failed to download url %s to %s: %s" % (url, filepath, e)
 
     def download_course(self, cname, dest_dir="."):
         """Download all the contents (quizzes, videos, lecture notes, ...) of the course to the given destination directory (defaults to .)"""
@@ -133,10 +97,33 @@ class UdacityDownloader():
             for fname, tfname in download_dict.iteritems():
                 try:
                     print "    * Downloading ", fname, "..."
-                    self.download(tfname, target_dir=resource_dir, target_fname=fname)
+                    download_file(tfname, resource_dir, fname)
                 except Exception as e:
                     print "     - failed ", fname, e
 
+def download_file(url, path ,fn):
+    file = os.path.join(path, fn)     
+    # NOTE the stream=True parameter
+    r = requests.get(url, stream=True)
+    total_length = int(r.headers.get('content-length'))
+
+    if os.path.exists(file):
+        existing_file_len = os.path.getsize(file)
+        if total_length == existing_file_len:
+            # File downloaded, early return 
+            return
+
+    ch_size = (1024**2) * 2 # MBs
+    bar = progressbar.ProgressBar(max_value=total_length/ch_size) 
+    
+    with open(file, 'wb') as f:
+        counter = 0
+        for chunk in r.iter_content(chunk_size=ch_size): 
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+                f.flush()
+                counter += 1
+                bar.update(counter)
 def main():
     #parse the commandline args
     parser = argparse.ArgumentParser(description='Download Udacity.com course videos/docs for offline use.')
