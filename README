@@ -8,7 +8,9 @@ lecture notes, quizzes, …) for offline reference.
 Installation
 -------------
 
-Make sure you have installed [Python 2.7](http://www.python.org/download)
+Make sure you have installed:
+Python 2.7 (http://www.python.org/download)
+mechanize 0.3.1 (https://pypi.python.org/pypi/mechanize/)
 
 With the help of python pip installation is as simple:
 `sudo pip install udacity-dl`
