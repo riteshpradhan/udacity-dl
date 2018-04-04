@@ -9,8 +9,8 @@ Installation
 -------------
 
 Make sure you have installed:
-Python 2.7 (http://www.python.org/download)
-mechanize 0.3.1 (https://pypi.python.org/pypi/mechanize/)
+Python 3 (http://www.python.org/download)
+mechanicalsoup 0.10.0 (https://pypi.python.org/pypi/MechanicalSoup/)
 
 With the help of python pip installation is as simple:
 `sudo pip install udacity-dl`
@@ -19,7 +19,7 @@ If you prefer manual installation:
 - Clone [this repo]() locally
 - Then simply run: `python setup.py install`
 This will create a udacity-dl script in `/usr/local/bin` (linux) or
-`c:\\Python27\\Scripts` (windows)
+`c:\\Python3x\\Scripts` (windows)
 
 
 ------
@@ -55,6 +55,12 @@ Features
 * Updated Courses list
 * Fix class downloads with multiple section per unit
 
+
+--------
+Tests
+---------
+
+* Tested and works with ST095 course download at this point
 =======================
 
 

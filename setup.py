@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
 from setuptools import setup
-# from distutils.core import setup
 
 setup(name="udacity-dl",
-      version="1.2.2",
+      version="2.0.0",
       description="Download udacity class videos and resources",
       long_description=open("README").read(),
       author="Ritesh Pradhan",
@@ -13,5 +12,5 @@ setup(name="udacity-dl",
       download_url="https://pypi.python.org/pypi/udacity-dl",
       packages=["udacitydl"],
       entry_points = { "console_scripts" : [ "udacity-dl = udacitydl.udacitydl:main"]},
-      install_requires=["mechanize","beautifulsoup4","argparse", "progressbar2"],
+      install_requires=["mechanicalsoup","tqmd"],
      )
